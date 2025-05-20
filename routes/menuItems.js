@@ -38,4 +38,4 @@ router.get('/:tasteType',async(req,res)=>{
         res.status(500).json({error: 'Error fetching data'});   
     }
 })
-module.exports = router;
+module.exports = router; 
