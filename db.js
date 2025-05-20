@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'); 
 
-const mongodbURL = 'mongodb://localhost:27017/hotels';
+// const mongodbURL = 'mongodb://localhost:27017/hotels';
+const mongodbURL = 'mongodb+srv://sarthakdeshmukh22:<db_password>@cluster.8wqzmm6.mongodb.net/'
 
 mongoose.connect(mongodbURL);
 const db = mongoose.connection;
