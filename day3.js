@@ -16,8 +16,10 @@
 const express = require('express');
 const app = express();
 
-const db = require('./db.js');
+require('dotenv').config();
 
+const db = require('./db.js');
+const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());// req.body
 
@@ -26,22 +28,6 @@ app.use(bodyParser.json());// req.body
 const MenuItem = require('./models/menu.js');
 
 
-
-// app.post('/person',async(req,res)=>{
-//    try{
-//     const data = req.body;
-
-//     const newperson = new Person(data);
-
-//     const response = await newperson.save();
-//     console.log('data saved');
-//     res.status(200).json(response);
-//    }
-//    catch(error){
-//     console.log(error);
-//     res.status(500).json({error: 'Error saving data'});
-//    }
-// })
 
 //to get the person data
 // app.get('/person',async(req,res)=>{
@@ -78,6 +64,8 @@ app.use('/Items', menuRoutes);
 //     }
 // })
 
-app.listen(3000,()=>{
+
+
+app.listen(PORT, () => {
     console.log('server is running on port 3000');
 });
