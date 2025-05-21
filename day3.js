@@ -22,31 +22,42 @@ const db = require('./db.js');
 const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());// req.body
+const personRoutes = require('./routes/personRoutes.js');
+const passport = require('./auth.js');
+
+app.use('/person', personRoutes);
+
+const menuRoutes = require('./routes/menuItems.js');
+
+//////authenticateion
+
+
+
+
+const logRequest = (req,res,next) =>{
+    console.log(`[${new Date().toLocaleString()}] Request Made to : ${req.originalUrl}`);
+    next();
+}
+app.use(logRequest);
+
+app.use(passport.initialize());
 
 
 
 const MenuItem = require('./models/menu.js');
 
 
-
-//to get the person data
-// app.get('/person',async(req,res)=>{
-//     try{
-//         const data = await Person.find();
-//         console.log('Data Saved');
-//         res.status(200).json(data);
-//     }catch(error){
-//         console.log(error);
-//         res.status(500).json(data);
-//     }
+// app.get('/',logRequest,(req,res)=>{
+    
+//     res.send( 'Hello from the server');
 // })
+const LocalMiddleware = passport.authenticate('local', {session : false});
+app.get('/',LocalMiddleware,(req,res)=>{
+    
+    res.send( 'Hello from the server');
+})
 
-const personRoutes = require('./routes/personRoutes.js');
-
-app.use('/person', personRoutes);
-
-const menuRoutes = require('./routes/menuItems.js');
-app.use('/Items', menuRoutes);
+app.use('/Items',LocalMiddleware, menuRoutes);
 
 // app.get('/person/:workType',async(req,res)=>{
 //     try{
